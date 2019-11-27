@@ -46,7 +46,7 @@ yarn start # 启动主进程调试
     - 打包 electron 应用：`yarn dist`，将会把安装包生成到 `/dist` 目录。
 - 将安装包上传到 oss：`yarn upload`；
 - 确认所有平台的安装包都上传到 oss 后，在任意一平台下进行发布：
-  - `yarn updates`：将生成的 updates.js 和 updates.json ；
+  - `yarn generate-updates`：将生成 updates.json，提供给站点下载；
   - `yarn upload-log`：将版本信息和日志文件更新到 oss。
 
 > **注意** Mac 打包需要有对应的的开发者证书（否则发布后的软件无法正常更新）证书由管理员管理。

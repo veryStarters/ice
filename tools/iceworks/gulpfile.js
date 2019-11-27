@@ -297,8 +297,8 @@ gulp.task('dist:win', (done) => {
   });
 });
 
-// 生成 updates.js 文件，提供给站点下载
-gulp.task('publish', (done) => {
+// 生成 updates.json 文件，提供给站点下载
+gulp.task('generate-updates', (done) => {
   const now = gutil.date(new Date(), 'yyyy-mm-dd');
   const version = appPkg.version;
 
@@ -322,15 +322,9 @@ gulp.task('publish', (done) => {
   };
 
   writeFile(
-    './dist/updates.js',
-    `callback(${JSON.stringify(template, null, 2)})`
+    './dist/updates.json',
+    JSON.stringify(template, null, 2)
   )
-    .then(() => {
-      return writeFile(
-        './dist/updates.json',
-        JSON.stringify(template, null, 2)
-      );
-    })
     .then(() => {
       done();
     });
@@ -446,7 +440,7 @@ gulp.task('dist', () => {
   }
 });
 
-gulp.task('oss', async () => {
+gulp.task('upload', async () => {
   const upload2oss = await getUpload2oss();
 
   const version = require('./out/package.json').version;
@@ -510,7 +504,7 @@ gulp.task('oss', async () => {
  * dist/updates.json ==copy=> iceworks-updates.json => oss: `${bucket}/assets/`
  * changelog/changelog.json ==copy=> iceworks-changelog.json => oss: `${bucket}/assets/`
  */
-gulp.task('oss-log', async () => {
+gulp.task('upload-log', async () => {
   const upload2oss = await getUpload2oss();
   const version = require('./out/package.json').version;
   const productNameLowCase = productName.toLowerCase();
