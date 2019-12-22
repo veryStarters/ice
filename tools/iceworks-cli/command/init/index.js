@@ -10,8 +10,40 @@ module.exports = async function(options = {}) {
   const go = await checkEmpty(cwd);
   if (!go) process.exit(1);
 
-  let { npmName, type } = options;
+  let { npmName, type, opt } = options;
   log.verbose('iceworks init options', options);
+
+  if (opt) {
+    try {
+      // console.log(opt)
+      const tmpOpt = JSON.parse(opt)
+      // console.log(tmpOpt)
+      if (tmpOpt) {
+        const { templateNpmName, ...rest } = tmpOpt
+        // console.log(npmName)
+        if (!npmName) {
+          npmName = templateNpmName
+        }
+        if (npmName) {
+          // console.log(rest)
+          // goldlog('init', { npmName, type });
+          // log.verbose('iceworks init', type, npmName);
+          console.log(npmName)
+          await initMaterialAndComponent({
+            cwd,
+            projectType: 'component',
+            template: npmName,
+            others: rest
+          });
+        } else {
+          console.error('lost the config of templateNpmName!')
+        }
+      }
+    } catch (e) {
+      console.error('er~~, something is wrong...')
+    }
+    return
+  }
 
   if (!options.type) {
     type = await selectType();

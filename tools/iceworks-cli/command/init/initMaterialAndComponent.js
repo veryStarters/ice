@@ -22,13 +22,16 @@ const generateNpmName = require('./generateNpmName');
 const log = require('../../lib/log');
 
 module.exports = async function({
-  cwd, projectType, template,
+  cwd, projectType, template, others
 }) {
   log.verbose('initMaterialAndComponent', projectType, template);
 
   const materialDir = await downloadMaterialTemplate(template);
   const templatePkg = await fse.readJson(path.join(materialDir, 'package.json'));
-  const { npmScope, projectName, description } = await initMaterialAsk(cwd, projectType);
+  if (others) {
+    others.nameScope = others.nameScope || '@ali';
+  }
+  const { npmScope, projectName, description } = others ? others: await initMaterialAsk(cwd, projectType);
 
   if (projectType === 'material') {
     // 生成根目录文件 package.json/README/lint 等
@@ -81,7 +84,7 @@ module.exports = async function({
     await addSingleMaterial({
       materialDir,
       cwd,
-      useDefaultOptions: false,
+      useDefaultOptions: others,
       npmScope,
       materialType: 'component',
       projectType: 'component',

@@ -18,7 +18,7 @@ program.arguments('<command>').action((cmd) => {
 });
 
 program
-  .command('init [type] [npmName]')
+  .command('init [type] [npmName] [opt]')
   .description('init project/material/component by template')
   .on('--help', () => {
     console.log('');
@@ -27,9 +27,10 @@ program
     console.log('  $ iceworks init component');
     console.log('  $ iceworks init project @icedesign/lite-scaffold');
   })
-  .action(async (type, npmName, cmd) => {
+  .action(async (type, npmName, opt, cmd) => {
     // 兼容 iceworks init @icedesign/pro-scaffold
     if (type && ['project', 'material', 'component'].indexOf(type) === -1) {
+      opt = npmName;
       npmName = type;
       type = 'project';
     }
@@ -37,6 +38,7 @@ program
     const options = cleanArgs(cmd);
     options.npmName = npmName;
     options.type = type;
+    options.opt = opt;
 
     try {
       // eslint-disable-next-line global-require
