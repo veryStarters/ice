@@ -29,7 +29,10 @@ module.exports = async function({
   const materialDir = await downloadMaterialTemplate(template);
   const templatePkg = await fse.readJson(path.join(materialDir, 'package.json'));
   if (others) {
-    others.nameScope = others.nameScope || '@ali';
+    others.npmScope = others.npmScope || '@ali';
+    others.version = others.version || '1.0.0'
+    others.title = others.title || 'My Component'
+    others.category = others.category || 'Others'
   }
   const { npmScope, projectName, description } = others ? others: await initMaterialAsk(cwd, projectType);
 
@@ -84,10 +87,11 @@ module.exports = async function({
     await addSingleMaterial({
       materialDir,
       cwd,
-      useDefaultOptions: others,
+      useDefaultOptions: false,
       npmScope,
       materialType: 'component',
       projectType: 'component',
+      others
     });
     console.log();
     console.log('Initialize component successfully.');

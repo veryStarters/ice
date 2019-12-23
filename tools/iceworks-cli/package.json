@@ -1,5 +1,5 @@
 {
-  "name": "iceworks",
+  "name": "@ali/iceworks-deep",
   "version": "3.1.9",
   "description": "iceworks CLI for develop project/material-collection/component.",
   "main": "bin/iceworks.js",
@@ -41,6 +41,9 @@
   },
   "engines": {
     "node": ">=8.3.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npm.alibaba-inc.com"
   },
   "__npminstall_done": false
 }

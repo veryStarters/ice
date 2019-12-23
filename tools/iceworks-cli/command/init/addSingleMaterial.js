@@ -32,6 +32,7 @@ module.exports = async function({
   npmScope,
   materialType,
   projectType,
+  others
 }) {
   log.verbose('addSingleMaterial args', materialDir, cwd, useDefaultOptions, npmScope, materialType);
 
@@ -50,7 +51,7 @@ module.exports = async function({
       options[item.name] = item.default;
     });
   } else {
-    options = await inquirer.prompt(questions);
+    options = others ? others : await inquirer.prompt(questions);
   }
 
   // @ali
