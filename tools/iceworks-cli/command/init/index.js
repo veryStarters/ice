@@ -7,10 +7,12 @@ const initMaterialAndComponent = require('./initMaterialAndComponent');
 
 module.exports = async function(options = {}) {
   const cwd = process.cwd();
-  const go = await checkEmpty(cwd);
-  if (!go) process.exit(1);
-
   let { npmName, type, opt } = options;
+  if (!opt) {
+    const go = await checkEmpty(cwd);
+    if (!go) process.exit(1);
+  }
+
   log.verbose('iceworks init options', options);
 
   if (opt) {
@@ -25,10 +27,6 @@ module.exports = async function(options = {}) {
           npmName = templateNpmName
         }
         if (npmName) {
-          // console.log(rest)
-          // goldlog('init', { npmName, type });
-          // log.verbose('iceworks init', type, npmName);
-          console.log(npmName)
           await initMaterialAndComponent({
             cwd,
             projectType: 'component',
