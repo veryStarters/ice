@@ -1,6 +1,6 @@
 {
   "name": "@ali/iceworks-deep",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "iceworks CLI for develop project/material-collection/component.",
   "main": "bin/iceworks.js",
   "bin": {
