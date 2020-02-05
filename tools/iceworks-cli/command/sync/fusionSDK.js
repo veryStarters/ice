@@ -37,48 +37,52 @@ class FusionSDK {
   }
 
   async getSite(token) {
-    const options = {
-      method: 'GET',
-      uri: `${this.fusionHost}/api/v1/mysites`,
-      headers: {
-        'x-auth-token': token,
-      },
-      json: true,
-      followRedirect: false,
-    };
+    // const options = {
+    //   method: 'GET',
+    //   uri: `${this.fusionHost}/api/v1/mysites`,
+    //   headers: {
+    //     'x-auth-token': token,
+    //   },
+    //   json: true,
+    //   followRedirect: false,
+    // };
 
-    log.verbose('fetch fusion sites start', options);
-    const { body } = await requestFusion(options, this.fusionHost);
-    log.verbose('fetch fusion sites success', body);
+    // log.verbose('fetch fusion sites start', options);
+    // const { body } = await requestFusion(options, this.fusionHost);
+    // log.verbose('fetch fusion sites success', body);
 
-    const sites = body.data;
+    // const sites = body.data;
+    //
+    // if (!body.success) {
+    //   throw new Error(body.message || '获取站点列表接口异常');
+    // }
+    //
+    // if (!sites || !sites.length) {
+    //   console.log();
+    //   console.log();
+    //   console.log('获取站点失败。您可以自己创建一个站点或者请其他站点把您添加为成员');
+    //   console.log(`创建站点文档: ${chalk.yellow(`${this.fusionHost}/help.html#/dev-create-site`)}`);
+    //   console.log(`添加成员文档: ${chalk.yellow(`${this.fusionHost}/help.html#/site-user-management`)}`);
+    //   console.log();
+    //   console.log();
+    //   throw new Error(body.message || '站点列表为空');
+    // }
 
-    if (!body.success) {
-      throw new Error(body.message || '获取站点列表接口异常');
+    // const { site } = await inquirer.prompt([
+    //   {
+    //     type: 'list',
+    //     name: 'site',
+    //     message: 'Please select your site:',
+    //     choices: sites.map((item) => ({
+    //       value: item,
+    //       name: item.name,
+    //     })),
+    //   },
+    // ]);
+    const site = {
+      id: 739,
+      name: '乐高在线开发组件'
     }
-
-    if (!sites || !sites.length) {
-      console.log();
-      console.log();
-      console.log('获取站点失败。您可以自己创建一个站点或者请其他站点把您添加为成员');
-      console.log(`创建站点文档: ${chalk.yellow(`${this.fusionHost}/help.html#/dev-create-site`)}`);
-      console.log(`添加成员文档: ${chalk.yellow(`${this.fusionHost}/help.html#/site-user-management`)}`);
-      console.log();
-      console.log();
-      throw new Error(body.message || '站点列表为空');
-    }
-
-    const { site } = await inquirer.prompt([
-      {
-        type: 'list',
-        name: 'site',
-        message: 'Please select your site:',
-        choices: sites.map((item) => ({
-          value: item,
-          name: item.name,
-        })),
-      },
-    ]);
 
     return {
       id: site.id,

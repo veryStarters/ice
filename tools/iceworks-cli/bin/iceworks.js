@@ -108,17 +108,17 @@ program
   });
 
 program
-  .command('sync')
+  .command('sync [token]')
   .description(`sync materials data to Fusion Material Center`)
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
     console.log('  $ iceworks sync');
   })
-  .action(async () => {
+  .action(async (token) => {
     try {
       // eslint-disable-next-line global-require
-      await require('../command/sync')();
+      await require('../command/sync')({token: token});
     }  catch (err) {
       log.error('iceworks sync error', err.message);
       console.error(err.stack);

@@ -8,7 +8,7 @@ const goldlog = require('../../lib/goldlog');
 const log = require('../../lib/log');
 const config = require('../../lib/config');
 
-module.exports = async () => {
+module.exports = async (options) => {
   const cwd = process.cwd();
   const DB_PATH_ABSOLUTE = path.join(cwd, DB_PATH);
   const pkgPath = path.join(cwd, 'package.json');
@@ -19,14 +19,14 @@ module.exports = async () => {
   let syncToAli = false;
 
   if (isAliInternal) {
-    const { forAli } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        message: '您正处于阿里巴巴内网环境，是否需要同步到内部站点？',
-        name: 'forAli',
-      },
-    ]);
-    syncToAli = forAli;
+    // const { forAli } = await inquirer.prompt([
+    //   {
+    //     type: 'confirm',
+    //     message: '您正处于阿里巴巴内网环境，是否需要同步到内部站点？',
+    //     name: 'forAli',
+    //   },
+    // ]);
+    syncToAli = true;
   }
 
   if (isAliNpm(name) && !syncToAli) {
@@ -45,6 +45,7 @@ module.exports = async () => {
   // get fusion token
   const tokenKey = syncToAli ? TOKEN_ALI_KEY : TOKEN_KEY;
   let fusionToken = await config.get(tokenKey);
+  fusionToken = fusionToken || options.token
   if (!fusionToken) {
     fusionToken = await fusionSDK.getToken();
     try {
